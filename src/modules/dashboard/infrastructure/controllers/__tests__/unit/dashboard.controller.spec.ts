@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { DashboardController } from '../../dashboard.controller'
 import { DashboardService } from '../../../services/dashboard.service'
 
-describe('DashboardController', () => {
+describe('DashboardController unit tests', () => {
   let controller: DashboardController
 
   beforeEach(async () => {
