@@ -7,18 +7,13 @@ import {
   Param,
   Delete,
 } from '@nestjs/common'
-import { DashboardService } from './dashboard.service'
-import { CreateDashboardDto } from './dto/create-dashboard.dto'
-import { UpdateDashboardDto } from './dto/update-dashboard.dto'
+import { CreateDashboardDto } from '../dto/create-dashboard.dto'
+import { UpdateDashboardDto } from '../dto/update-dashboard.dto'
+import { DashboardService } from '../services/dashboard.service'
 
-@Controller('dashboard')
+@Controller('dashboards')
 export class DashboardController {
   constructor(private readonly dashboardService: DashboardService) {}
-
-  @Post()
-  create(@Body() createDashboardDto: CreateDashboardDto) {
-    return this.dashboardService.create(createDashboardDto)
-  }
 
   @Get()
   findAll() {
@@ -28,6 +23,11 @@ export class DashboardController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.dashboardService.findOne(+id)
+  }
+
+  @Post()
+  create(@Body() createDashboardDto: CreateDashboardDto) {
+    return this.dashboardService.create(createDashboardDto)
   }
 
   @Patch(':id')
