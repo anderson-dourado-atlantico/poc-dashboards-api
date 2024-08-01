@@ -4,6 +4,10 @@ import { UpdateFolderDto } from '../dto/update-folder.dto'
 
 @Injectable()
 export class FolderService {
+  incluirValoresIniciais() {
+    throw new Error('Method not implemented.')
+  }
+
   create(createFolderDto: CreateFolderDto) {
     return 'This action adds a new folder'
   }

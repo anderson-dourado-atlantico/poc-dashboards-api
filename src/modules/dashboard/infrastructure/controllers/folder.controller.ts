@@ -25,6 +25,11 @@ export class FolderController {
     return this.folderService.findOne(+id)
   }
 
+  @Post('/include')
+  includeFolders() {
+    this.folderService.incluirValoresIniciais()
+  }
+
   @Post()
   create(@Body() createDashboardDto: CreateFolderDto) {
     return this.folderService.create(createDashboardDto)

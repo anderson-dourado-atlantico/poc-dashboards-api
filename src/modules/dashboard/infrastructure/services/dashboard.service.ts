@@ -4,6 +4,10 @@ import { UpdateDashboardDto } from '../dto/update-dashboard.dto'
 
 @Injectable()
 export class DashboardService {
+  incluirValoresIniciais() {
+    throw new Error('Method not implemented.')
+  }
+
   create(createDashboardDto: CreateDashboardDto) {
     return 'This action adds a new dashboard'
   }
