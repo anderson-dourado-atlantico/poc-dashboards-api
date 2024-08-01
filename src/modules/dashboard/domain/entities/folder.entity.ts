@@ -8,9 +8,21 @@ export type FolderProps = {
 
 export class FolderEntity extends Entity<FolderProps> {
   constructor(
-    public readonly props: FolderProps,
+    readonly props: FolderProps,
     id?: string,
   ) {
     super(props, id)
+  }
+
+  get name() {
+    return this.props.name
+  }
+
+  get alias() {
+    return this.props.alias
+  }
+
+  get folderParentId() {
+    return this.props.folderParentId
   }
 }
