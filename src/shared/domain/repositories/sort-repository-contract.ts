@@ -1,6 +1,6 @@
 import { Entity } from '../entities/entity'
 import { FilterBase } from './filter-base-contract'
-import { RepositoryInterface } from './repository-contract'
+import { IRepositoryInterface } from './repository-contract'
 
 export type SortDirection = 'asc' | 'desc'
 
@@ -19,7 +19,7 @@ export class SortParams {
   }
 }
 
-export interface SortRepository<E extends Entity, Filter extends FilterBase<E>>
-  extends RepositoryInterface<E> {
+export interface ISortRepository<E extends Entity, Filter extends FilterBase<E>>
+  extends IRepositoryInterface<E> {
   search(filter: Filter, sort?: SortParams): Promise<E[]>
 }

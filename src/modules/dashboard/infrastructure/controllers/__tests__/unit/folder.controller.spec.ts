@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing'
 
 import { FolderController } from '../../folder.controller'
 import { FolderService } from '../../../services/folder.service'
+import { FolderInMemoryRepository } from '../../../database/in-memory/repositories/folder.in-memory.repository'
 
 describe('FolderController unit tests', () => {
   let controller: FolderController
@@ -9,7 +10,10 @@ describe('FolderController unit tests', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [FolderController],
-      providers: [FolderService],
+      providers: [
+        { provide: 'IFolderRepository', useClass: FolderInMemoryRepository },
+        FolderService,
+      ],
     }).compile()
 
     controller = module.get<FolderController>(FolderController)

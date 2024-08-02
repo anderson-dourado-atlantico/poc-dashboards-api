@@ -12,7 +12,7 @@ export class Entity<E = any> {
   constructor(props: E & EntityProps, id?: string) {
     this.props = props
     this._id = id || uuidv4()
-    this.props.createdAt = this.props.createdAt ?? new Date()
+    this.props.createdAt = props.createdAt ?? new Date()
     this.props.updatedAt = this.props.createdAt
   }
 

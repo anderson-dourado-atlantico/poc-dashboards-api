@@ -24,6 +24,6 @@ describe('FolderEntity unit tests', () => {
     props = FolderDataBuilder({ folderParentId: undefined })
     sut = new FolderEntity(props)
 
-    expect(sut.props.folderParentId).toBeUndefined()
+    expect(sut.props.folderParentId).toBeNull()
   })
 })

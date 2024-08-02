@@ -1,6 +1,6 @@
 import { Entity } from '../../entities/entity'
 import { FilterBase } from '../filter-base-contract'
-import { SortParams, SortRepository } from '../sort-repository-contract'
+import { SortParams, ISortRepository } from '../sort-repository-contract'
 import { InMemoryRepository } from './in-memory.repository'
 
 export abstract class InMemorySortRepository<
@@ -8,7 +8,7 @@ export abstract class InMemorySortRepository<
     F extends FilterBase<E>,
   >
   extends InMemoryRepository<E>
-  implements SortRepository<E, F>
+  implements ISortRepository<E, F>
 {
   async search(filter: F, sort: SortParams = null): Promise<E[]> {
     const filteredItems = await filter.applyFilter(this.items)
@@ -23,8 +23,18 @@ export abstract class InMemorySortRepository<
     const sortedItems = items.sort((a, b) => {
       const field_a = this._getField(a, sort.field)
       const field_b = this._getField(b, sort.field)
-      if (field_a > field_b) return sort.direction === 'asc' ? 1 : -1
-      if (field_a < field_b) return sort.direction === 'asc' ? -1 : 1
+      if (field_a > field_b)
+        return sort.direction === 'asc' ||
+          sort.direction === undefined ||
+          sort.direction === null
+          ? 1
+          : -1
+      if (field_a < field_b)
+        return sort.direction === 'asc' ||
+          sort.direction === undefined ||
+          sort.direction === null
+          ? -1
+          : 1
 
       return 0
     })

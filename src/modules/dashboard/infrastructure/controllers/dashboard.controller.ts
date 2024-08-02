@@ -7,8 +7,8 @@ import {
   Param,
   Delete,
 } from '@nestjs/common'
-import { CreateDashboardDto } from '../dto/create-dashboard.dto'
-import { UpdateDashboardDto } from '../dto/update-dashboard.dto'
+import { CreateDashboardDto } from './dtos/create-dashboard.dto'
+import { UpdateDashboardDto } from './dtos/update-dashboard.dto'
 import { DashboardService } from '../services/dashboard.service'
 
 @Controller('dashboards')

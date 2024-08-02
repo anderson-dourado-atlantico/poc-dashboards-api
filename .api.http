@@ -1,4 +1,19 @@
 @host=http://localhost:3000
 
+### Including sample folders
+POST {{host}}/folders/include
+
+
 ### Getting all folders
 GET {{host}}/folders
+
+### Getting folders by name (like)
+GET {{host}}/folders?name=Ope
+
+### Getting sorted by name
+GET {{host}}/folders?sort=name
+
+### Getting folders by folderParentId (equal)
+GET {{host}}/folders?folderParentId=da04071c-b656-4b31-a8cb-08e3a7123509
+
+

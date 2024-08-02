@@ -1,7 +1,7 @@
 import { Entity, EntityProps } from '@/shared/domain/entities/entity'
 
 export type FolderProps = {
-  folderParentId: string | undefined
+  folderParentId: string | null
   name: string
   alias: string
 } & EntityProps
