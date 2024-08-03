@@ -9,10 +9,10 @@ export class Entity<E = any> {
   public readonly props: E & EntityProps
   private readonly _id: string
 
-  constructor(props: E & EntityProps, id?: string) {
+  constructor(props: E, id?: string) {
     this.props = props
     this._id = id || uuidv4()
-    this.props.createdAt = props.createdAt ?? new Date()
+    this.props.createdAt = this.props.createdAt ?? new Date()
     this.props.updatedAt = this.props.createdAt
   }
 

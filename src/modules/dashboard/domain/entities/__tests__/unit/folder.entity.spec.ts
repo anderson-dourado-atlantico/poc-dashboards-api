@@ -1,6 +1,7 @@
 import { fakeUUID } from '@/shared/domain/entities/__tests__/helpers/helpers'
 import { FolderEntity, FolderProps } from '../../folder.entity'
 import { FolderDataBuilder } from '../helpers/folder-data-builder'
+import { DashboardType } from '../../dashboard-content.entity'
 
 describe('FolderEntity unit tests', () => {
   let props: FolderProps
@@ -16,6 +17,8 @@ describe('FolderEntity unit tests', () => {
     expect(sut.props.name).toEqual(props.name)
     expect(sut.props.alias).toEqual(props.alias)
     expect(sut.props.folderParentId).toEqual(props.folderParentId)
+    expect(sut.props.type).toEqual(props.type)
+    expect(sut.props.type).toEqual(DashboardType.FOLDER)
     expect(sut.props.createdAt).toBeInstanceOf(Date)
     expect(sut.props.updatedAt).toBeInstanceOf(Date)
   })

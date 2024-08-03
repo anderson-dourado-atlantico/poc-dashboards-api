@@ -1,28 +1,24 @@
-import { Entity, EntityProps } from '@/shared/domain/entities/entity'
+import { Entity } from '@/shared/domain/entities/entity'
+import {
+  DashboardContentEntity,
+  DashboardContentProps,
+  DashboardType,
+} from './dashboard-content.entity'
 
 export type FolderProps = {
-  folderParentId: string | null
-  name: string
-  alias: string
-} & EntityProps
+  content?: DashboardContentEntity[] | null
+} & DashboardContentProps
 
-export class FolderEntity extends Entity<FolderProps> {
+export class FolderEntity extends DashboardContentEntity {
   constructor(
     readonly props: FolderProps,
     id?: string,
   ) {
     super(props, id)
+    this.props.type = DashboardType.FOLDER
   }
 
-  get name() {
-    return this.props.name
-  }
-
-  get alias() {
-    return this.props.alias
-  }
-
-  get folderParentId() {
-    return this.props.folderParentId
+  get content() {
+    return this.props.content
   }
 }

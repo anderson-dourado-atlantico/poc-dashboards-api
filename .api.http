@@ -11,9 +11,10 @@ GET {{host}}/folders
 GET {{host}}/folders?name=Ope
 
 ### Getting sorted by name
-GET {{host}}/folders?sort=name
+GET {{host}}/folders?sort=name,desc
+
+### Getting sorted by name
+GET {{host}}/folders?sort=name&sort=createdAt,desc
 
 ### Getting folders by folderParentId (equal)
-GET {{host}}/folders?folderParentId=da04071c-b656-4b31-a8cb-08e3a7123509
-
-
+GET {{host}}/folders?folderParentId=1a0e0f47-7a3a-400f-81c3-73486a5660e6

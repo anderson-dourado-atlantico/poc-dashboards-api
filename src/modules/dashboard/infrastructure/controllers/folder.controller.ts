@@ -9,17 +9,19 @@ import {
   Query,
 } from '@nestjs/common'
 import { FolderService } from '../services/folder.service'
-import { CreateFolderDto } from './dtos/create-folder.dto'
-import { UpdateFolderDto } from './dtos/update-folder.dto'
 import { FolderSearchDto } from './dtos/folder-search.dto'
 import { SortParams } from '@/shared/domain/repositories/sort-repository-contract'
+import { SortDto } from '@/shared/infrastructure/domain/repositories/dtos/sort.dto'
 
 @Controller('folders')
 export class FolderController {
   constructor(private readonly folderService: FolderService) {}
 
   @Get()
-  findAll(@Query() searchParams: FolderSearchDto, @Query() sort?: SortParams) {
+  findAll(
+    @Query() searchParams: FolderSearchDto,
+    @Query('sort') sort: SortDto,
+  ) {
     return this.folderService.search(searchParams, sort)
   }
 

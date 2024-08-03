@@ -12,10 +12,25 @@ export type SortProps = {
 export class SortParams {
   readonly field: string | string[] | null
   readonly direction?: SortDirection | null
+  private _next?: SortParams | null
 
   constructor(props: SortProps) {
     this.field = props.field ?? null
     this.direction = props.direction ?? 'asc'
+    this._next = null
+  }
+
+  private set next(next: SortParams) {
+    this._next = next
+  }
+
+  get next() {
+    return this._next
+  }
+
+  addNext(next: SortParams): SortParams {
+    this.next = next
+    return this.next
   }
 }
 

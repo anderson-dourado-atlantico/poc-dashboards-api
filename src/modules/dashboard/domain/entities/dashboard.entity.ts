@@ -1,17 +1,19 @@
-import { Entity, EntityProps } from '@/shared/domain/entities/entity'
+import {
+  DashboardContentEntity,
+  DashboardContentProps,
+  DashboardType,
+} from './dashboard-content.entity'
 
-export type DashboardProps = {
-  folderId: string
-  name: string
-  alias: string
+export type DashboardItemProps = {
   embeddedLink: string
-} & EntityProps
+} & DashboardContentProps
 
-export class DashboardEntity extends Entity<DashboardProps> {
+export class DashboardItemEntity extends DashboardContentEntity {
   constructor(
-    public readonly props: DashboardProps,
+    public readonly props: DashboardItemProps,
     id?: string,
   ) {
     super(props, id)
+    this.props.type = DashboardType.ITEM
   }
 }

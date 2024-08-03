@@ -1,16 +1,18 @@
-import { DashboardEntity } from '@/modules/dashboard/domain/entities/dashboard.entity'
+import { DashboardItemEntity } from '@/modules/dashboard/domain/entities/dashboard.entity'
 import { FilterBase } from '@/shared/domain/repositories/filter-base-contract'
 
 export type DashboadFilterProps = {
   name?: string
   alias?: string
-  folderId?: string
+  folderParentId?: string
 }
 
-export class DashboardFilter implements FilterBase<DashboardEntity> {
+export class DashboardFilter implements FilterBase<DashboardItemEntity> {
   constructor(public readonly props: DashboadFilterProps) {}
 
-  async applyFilter(context: DashboardEntity[]): Promise<DashboardEntity[]> {
+  async applyFilter(
+    context: DashboardItemEntity[],
+  ): Promise<DashboardItemEntity[]> {
     let itemsFiltered = context
 
     if (this.props.name && this.props.name !== '') {
@@ -25,9 +27,9 @@ export class DashboardFilter implements FilterBase<DashboardEntity> {
       )
     }
 
-    if (this.props.folderId && this.props.folderId !== '') {
+    if (this.props.folderParentId && this.props.folderParentId !== '') {
       itemsFiltered = itemsFiltered.filter(
-        item => item.props.folderId === this.props.folderId,
+        item => item.props.folderParentId === this.props.folderParentId,
       )
     }
 

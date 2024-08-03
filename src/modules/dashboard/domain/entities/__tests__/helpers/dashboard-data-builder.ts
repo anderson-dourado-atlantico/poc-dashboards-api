@@ -1,9 +1,10 @@
 import { faker } from '@faker-js/faker'
 
-import { DashboardProps } from '../../dashboard.entity'
+import { DashboardItemProps } from '../../dashboard.entity'
+import { DashboardType } from '../../dashboard-content.entity'
 
 type Props = {
-  folderId?: string
+  folderParentId?: string
   name?: string
   alias?: string
   embeddedLink?: string
@@ -11,9 +12,10 @@ type Props = {
   updatedAt?: Date
 }
 
-export function DashboardDataBuilder(props: Props): DashboardProps {
+export function DashboardDataBuilder(props: Props): DashboardItemProps {
   return {
-    folderId: props.folderId ?? faker.string.uuid(),
+    folderParentId: props.folderParentId ?? faker.string.uuid(),
+    type: DashboardType.ITEM,
     embeddedLink: props.embeddedLink ?? faker.internet.url(),
     name: props.name ?? faker.word.words({ count: { min: 3, max: 5 } }),
     alias: props.alias ?? faker.word.sample(5),
