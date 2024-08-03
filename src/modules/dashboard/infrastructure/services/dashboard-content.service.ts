@@ -4,7 +4,20 @@ import { FolderSearchDto } from '../controllers/dtos/folder-search.dto'
 import { IDashboardContentRepository } from '../../domain/repositories/dashboard-content.repository'
 import { SortParams } from '@/shared/domain/repositories/sort-repository-contract'
 import { DashboardContentFilter } from '../database/in-memory/repositories/filters/dashboard-content.in-memory.filter'
-import { DashboardContentEntity } from '../../domain/entities/dashboard-content.entity'
+import {
+  DashboardContentEntity,
+  DashboardContentProps,
+  DashboardType,
+} from '../../domain/entities/dashboard-content.entity'
+import { FolderEntity } from '../../domain/entities/folder.entity'
+
+function sleep(ms: number): Promise<void> {
+  return new Promise(resolve =>
+    setTimeout(() => {
+      resolve()
+    }, ms),
+  )
+}
 
 @Injectable()
 export class DashboardContentService {
@@ -13,8 +26,60 @@ export class DashboardContentService {
 
   constructor() {}
 
-  incluirValoresIniciais() {
-    // throw new Error('Method not implemented.')
+  async incluirValoresIniciais() {
+    const folderPropsList: DashboardContentProps[] = [
+      {
+        name: 'Operação',
+        alias: 'Operação',
+        folderParentId: null,
+        type: DashboardType.FOLDER,
+      },
+      {
+        name: 'Manutenção',
+        alias: 'Manutenção',
+        folderParentId: null,
+        type: DashboardType.FOLDER,
+      },
+      {
+        name: 'Sensor',
+        alias: 'Sensor',
+        folderParentId: null,
+        type: DashboardType.FOLDER,
+      },
+    ]
+
+    folderPropsList.forEach(async props => {
+      await this.dashboardRepository.insert(new FolderEntity(props))
+      await sleep(1000)
+    })
+
+    // Operações
+    let dashContent = await this.dashboardRepository.search(
+      new DashboardContentFilter({ name: 'Operação' }),
+      new SortParams({ field: 'name', direction: 'asc' }),
+    )
+
+    const folderPropsOperacaoList: DashboardContentProps[] = [
+      {
+        name: 'Operação de Sensores',
+        alias: 'Ope Sensores',
+        folderParentId: dashContent[0].id,
+        type: DashboardType.FOLDER,
+      },
+      {
+        name: 'Operação Regular',
+        alias: 'Ope Regular',
+        folderParentId: dashContent[0].id,
+        type: DashboardType.FOLDER,
+      },
+    ]
+
+    folderPropsOperacaoList.forEach(async props => {
+      await this.dashboardRepository.insert(new FolderEntity(props))
+      await sleep(1000)
+    })
+
+    return `Folders incluidos com sucesso!!`
   }
 
   async search(

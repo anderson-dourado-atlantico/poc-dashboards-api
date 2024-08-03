@@ -1,14 +1,14 @@
 import { FolderEntity } from '@/modules/dashboard/domain/entities/folder.entity'
-import { FolderFilter } from '../../filters/folder.in-memory.filter'
-import { FolderInMemoryRepository } from '../../folder.in-memory.repository'
 import { FolderDataBuilder } from '@/modules/dashboard/domain/entities/__tests__/helpers/folder-data-builder'
 import { SortParams } from '@/shared/domain/repositories/sort-repository-contract'
+import { DashboardInMemoryRepository } from '../../dashboard.in-memory.repository'
+import { DashboardContentFilter } from '../../filters/dashboard-content.in-memory.filter'
 
 describe('FolderInMemoryRepository unit tests', () => {
-  let sut: FolderInMemoryRepository
+  let sut: DashboardInMemoryRepository
 
   beforeEach(() => {
-    sut = new FolderInMemoryRepository()
+    sut = new DashboardInMemoryRepository()
     sut.insert(new FolderEntity(FolderDataBuilder({ name: 'Operações' })))
     sut.insert(new FolderEntity(FolderDataBuilder({ name: 'Manutenção' })))
     sut.insert(
@@ -28,7 +28,7 @@ describe('FolderInMemoryRepository unit tests', () => {
   })
 
   it('Should filter by name', async () => {
-    const filter = new FolderFilter({
+    const filter = new DashboardContentFilter({
       name: 'OpE',
     })
     const filteredItems = await sut.search(filter)
@@ -37,7 +37,7 @@ describe('FolderInMemoryRepository unit tests', () => {
   })
 
   it('Should filter by alias', async () => {
-    const filter = new FolderFilter({
+    const filter = new DashboardContentFilter({
       alias: 'ojA',
     })
     const filteredItems = await sut.search(filter)
@@ -46,7 +46,7 @@ describe('FolderInMemoryRepository unit tests', () => {
   })
 
   it('Should filter by name and sort results by name', async () => {
-    const filter = new FolderFilter({
+    const filter = new DashboardContentFilter({
       name: 'OpE',
     })
     let sort = new SortParams({ field: ['props', 'name'] })

@@ -1,6 +1,9 @@
-import { Entity } from '../../entities/entity'
-import { FilterBase } from '../filter-base-contract'
-import { SortParams, ISortRepository } from '../sort-repository-contract'
+import { Entity } from '../../../../domain/entities/entity'
+import { FilterBase } from '../../../../domain/repositories/filter-base-contract'
+import {
+  SortParams,
+  ISortRepository,
+} from '../../../../domain/repositories/sort-repository-contract'
 import { InMemoryRepository } from './in-memory.repository'
 
 export abstract class InMemorySortRepository<

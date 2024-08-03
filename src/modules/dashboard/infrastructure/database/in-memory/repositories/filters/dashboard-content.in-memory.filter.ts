@@ -17,6 +17,21 @@ export class DashboardContentFilter
   ): Promise<DashboardContentEntity[]> {
     let itemsFiltered = context
 
+    if (this.props.folderParentId && this.props.folderParentId !== '') {
+      itemsFiltered = itemsFiltered.filter(
+        item => item.props.folderParentId === this.props.folderParentId,
+      )
+    }
+
+    if (
+      this.props.folderParentId === null ||
+      this.props.folderParentId === undefined
+    ) {
+      itemsFiltered = itemsFiltered.filter(
+        item => item.props.folderParentId === null,
+      )
+    }
+
     if (this.props.name && this.props.name !== '') {
       itemsFiltered = itemsFiltered.filter(item =>
         item.props.name.toLowerCase().includes(this.props.name.toLowerCase()),
@@ -26,12 +41,6 @@ export class DashboardContentFilter
     if (this.props.alias && this.props.alias !== '') {
       itemsFiltered = itemsFiltered.filter(item =>
         item.props.alias.toLowerCase().includes(this.props.alias.toLowerCase()),
-      )
-    }
-
-    if (this.props.folderParentId && this.props.folderParentId !== '') {
-      itemsFiltered = itemsFiltered.filter(
-        item => item.props.folderParentId === this.props.folderParentId,
       )
     }
 

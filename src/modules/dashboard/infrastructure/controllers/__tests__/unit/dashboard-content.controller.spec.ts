@@ -3,7 +3,7 @@ import { DashboardContentController } from '../../dashboard-content.controller'
 import { DashboardContentService } from '../../../services/dashboard-content.service'
 import { DashboardInMemoryRepository } from '../../../database/in-memory/repositories/dashboard.in-memory.repository'
 
-describe('DashboardController unit tests', () => {
+describe('DashboardContentController unit tests', () => {
   let controller: DashboardContentController
 
   beforeEach(async () => {

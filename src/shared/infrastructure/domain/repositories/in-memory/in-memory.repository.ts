@@ -1,6 +1,6 @@
-import { Entity } from '../../entities/entity'
-import { NotFoundError } from '../../errors/not-found.error'
-import { IRepositoryInterface } from '../repository-contract'
+import { Entity } from '../../../../domain/entities/entity'
+import { NotFoundError } from '../../../../domain/errors/not-found.error'
+import { IRepositoryInterface } from '../../../../domain/repositories/repository-contract'
 
 export abstract class InMemoryRepository<E extends Entity>
   implements IRepositoryInterface<E>

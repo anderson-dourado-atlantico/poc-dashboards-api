@@ -16,16 +16,6 @@ import { SortDto } from '@/shared/infrastructure/domain/repositories/dtos/sort.d
 export class DashboardContentController {
   constructor(private readonly dashboardService: DashboardContentService) {}
 
-  // @Get()
-  // findAll() {
-  //   return this.dashboardService.findAll()
-  // }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.dashboardService.findOne(+id)
-  // }
-
   @Get()
   findAll(
     @Query() searchParams: FolderSearchDto,
