@@ -1,17 +1,26 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { DashboardController } from '../../dashboard.controller'
-import { DashboardService } from '../../../services/dashboard.service'
+import { DashboardContentController } from '../../dashboard-content.controller'
+import { DashboardContentService } from '../../../services/dashboard-content.service'
+import { DashboardInMemoryRepository } from '../../../database/in-memory/repositories/dashboard.in-memory.repository'
 
 describe('DashboardController unit tests', () => {
-  let controller: DashboardController
+  let controller: DashboardContentController
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [DashboardController],
-      providers: [DashboardService],
+      controllers: [DashboardContentController],
+      providers: [
+        DashboardContentService,
+        {
+          provide: 'IDashboardContentRepository',
+          useClass: DashboardInMemoryRepository,
+        },
+      ],
     }).compile()
 
-    controller = module.get<DashboardController>(DashboardController)
+    controller = module.get<DashboardContentController>(
+      DashboardContentController,
+    )
   })
 
   it('should be defined', () => {

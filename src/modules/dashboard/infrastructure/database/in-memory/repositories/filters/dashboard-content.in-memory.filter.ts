@@ -1,4 +1,4 @@
-import { DashboardItemEntity } from '@/modules/dashboard/domain/entities/dashboard.entity'
+import { DashboardContentEntity } from '@/modules/dashboard/domain/entities/dashboard-content.entity'
 import { FilterBase } from '@/shared/domain/repositories/filter-base-contract'
 
 export type DashboadFilterProps = {
@@ -7,12 +7,14 @@ export type DashboadFilterProps = {
   folderParentId?: string
 }
 
-export class DashboardFilter implements FilterBase<DashboardItemEntity> {
+export class DashboardContentFilter
+  implements FilterBase<DashboardContentEntity>
+{
   constructor(public readonly props: DashboadFilterProps) {}
 
   async applyFilter(
-    context: DashboardItemEntity[],
-  ): Promise<DashboardItemEntity[]> {
+    context: DashboardContentEntity[],
+  ): Promise<DashboardContentEntity[]> {
     let itemsFiltered = context
 
     if (this.props.name && this.props.name !== '') {

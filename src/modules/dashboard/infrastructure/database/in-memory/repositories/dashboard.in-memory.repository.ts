@@ -1,8 +1,8 @@
-import { DashboardItemEntity } from '@/modules/dashboard/domain/entities/dashboard.entity'
-import { IDashboardRepository } from '@/modules/dashboard/domain/repositories/dashboard.repository'
+import { IDashboardContentRepository } from '@/modules/dashboard/domain/repositories/dashboard-content.repository'
 import { InMemorySortRepository } from '@/shared/domain/repositories/in-memory/in-memory.sort.repository'
-import { DashboardFilter } from './filters/dashboard.in-memory.filter'
+import { DashboardContentFilter } from './filters/dashboard-content.in-memory.filter'
+import { DashboardContentEntity } from '@/modules/dashboard/domain/entities/dashboard-content.entity'
 
 export class DashboardInMemoryRepository
-  extends InMemorySortRepository<DashboardItemEntity, DashboardFilter>
-  implements IDashboardRepository {}
+  extends InMemorySortRepository<DashboardContentEntity, DashboardContentFilter>
+  implements IDashboardContentRepository {}

@@ -1,9 +1,9 @@
-import { DashboardItemEntity } from '../entities/dashboard.entity'
 import { ISortRepository } from '@/shared/domain/repositories/sort-repository-contract'
 import { FilterBase } from '@/shared/domain/repositories/filter-base-contract'
+import { DashboardContentEntity } from '../entities/dashboard-content.entity'
 
-export interface IDashboardRepository
+export interface IDashboardContentRepository
   extends ISortRepository<
-    DashboardItemEntity,
-    FilterBase<DashboardItemEntity>
+    DashboardContentEntity,
+    FilterBase<DashboardContentEntity>
   > {}
