@@ -30,7 +30,7 @@ GET {{host}}/dashboards?sort=name,desc
 GET {{host}}/dashboards?sort=name&sort=createdAt,desc
 
 ### Getting dashboards by folderParentId (equal)
-GET {{host}}/dashboards?name=dash&sort=type&folderParentId=
+GET {{host}}/dashboards?sort=type&folderParentId=
 
 ### Getting AccessContent by id
 GET {{host}}/dashboards/access/a17403c9-68a9-4cc4-99cf-108a59c8973f

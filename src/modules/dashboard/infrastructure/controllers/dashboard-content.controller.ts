@@ -60,7 +60,7 @@ export class DashboardContentController {
     } as DashboardItemProps)
   }
 
-  @Put('/:id')
+  @Put(':id')
   async atualizarDados(
     @Body() novoConteudo: DashboardContentCreateDto,
     @Param('id') id: string,
@@ -68,6 +68,11 @@ export class DashboardContentController {
     return this.dashboardService.atualizarDashboardContent(id, {
       ...novoConteudo,
     } as DashboardItemProps)
+  }
+
+  @Delete(':id')
+  async deletarDashboardContent(@Param('id') id: string): Promise<void> {
+    return this.dashboardService.deletarConteudo(id)
   }
 
   @Post('include')

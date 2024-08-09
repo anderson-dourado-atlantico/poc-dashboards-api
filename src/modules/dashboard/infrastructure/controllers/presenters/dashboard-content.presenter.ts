@@ -8,6 +8,7 @@ export class DashboardContentPresenter {
   readonly id: string
   readonly folderParentId: string
   readonly name: string
+  readonly alias: string
   readonly type: DashboardType
   readonly embeddedLink?: string | null
 
@@ -15,6 +16,7 @@ export class DashboardContentPresenter {
     this.id = props.id
     this.folderParentId = props.folderParentId ?? ''
     this.name = props.name
+    this.alias = props.alias
     this.type = props.type
 
     if (

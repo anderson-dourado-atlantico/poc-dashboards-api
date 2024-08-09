@@ -142,6 +142,21 @@ export class DashboardContentService {
     )
   }
 
+  async deletarConteudo(id: string): Promise<void> {
+    const dashboard = await this.dashboardRepository.findById(id)
+
+    if (dashboard.type === DashboardType.FOLDER) {
+      const folderContent = (await this.dashboardRepository.findAll()).filter(
+        item => item.folderParentId === dashboard.id,
+      )
+      if (folderContent.length > 0) {
+        folderContent.forEach(async item => await this.deletarConteudo(item.id))
+      }
+    }
+
+    return this.dashboardRepository.delete(id)
+  }
+
   private toSort(sort: SortDto): SortParams {
     let sortDtoAtual = sort
     let sortParam = new SortParams({
