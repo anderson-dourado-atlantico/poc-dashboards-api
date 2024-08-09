@@ -1,20 +1,39 @@
 @host=http://localhost:3000
 
-### Including sample folders
-POST {{host}}/folders/include
+### Including sample dashboards
+POST {{host}}/dashboards/include
 
 
-### Getting all folders
-GET {{host}}/folders
+### Incluir NOVO Folder
+POST {{host}}/dashboards
+content-type: application/json
 
-### Getting folders by name (like)
-GET {{host}}/folders?name=Ope
+{
+    "name": "Teste Pasta",
+    "alias": "TS PT",
+    "type": "FOLDER"
+}
+
+# folderParentId?: string
+# embbededLink?: string
+
+### Getting all dashboards
+GET {{host}}/dashboards
+
+### Getting dashboards by name (like)
+GET {{host}}/dashboards?name=Ope
 
 ### Getting sorted by name
-GET {{host}}/folders?sort=name,desc
+GET {{host}}/dashboards?sort=name,desc
 
 ### Getting sorted by name
-GET {{host}}/folders?sort=name&sort=createdAt,desc
+GET {{host}}/dashboards?sort=name&sort=createdAt,desc
 
-### Getting folders by folderParentId (equal)
-GET {{host}}/folders?folderParentId=dee29773-27d6-4085-9dd3-a87b0f9c1e3c
+### Getting dashboards by folderParentId (equal)
+GET {{host}}/dashboards?name=dash&sort=type&folderParentId=
+
+### Getting AccessContent by id
+GET {{host}}/dashboards/access/a17403c9-68a9-4cc4-99cf-108a59c8973f
+
+### Getting Item Content by Id
+GET {{host}}/dashboards/8bc658ff-3997-4001-89b2-955046365042

@@ -3,6 +3,9 @@ import { FolderDataBuilder } from '@/modules/dashboard/domain/entities/__tests__
 import { SortParams } from '@/shared/domain/repositories/sort-repository-contract'
 import { DashboardInMemoryRepository } from '../../dashboard.in-memory.repository'
 import { DashboardContentFilter } from '../../filters/dashboard-content.in-memory.filter'
+import { DashboardContentEntity } from '@/modules/dashboard/domain/entities/dashboard-content.entity'
+import { DashboardItemEntity } from '@/modules/dashboard/domain/entities/dashboard.entity'
+import { DashboardDataBuilder } from '@/modules/dashboard/domain/entities/__tests__/helpers/dashboard-data-builder'
 
 describe('FolderInMemoryRepository unit tests', () => {
   let sut: DashboardInMemoryRepository
@@ -20,11 +23,47 @@ describe('FolderInMemoryRepository unit tests', () => {
     sut.insert(
       new FolderEntity(FolderDataBuilder({ name: 'Operações Externas' })),
     )
-    sut.insert(
-      new FolderEntity(
-        FolderDataBuilder({ name: 'Loja Especial', alias: 'loja' }),
-      ),
+
+    let entity = new FolderEntity(
+      FolderDataBuilder({ name: 'Loja Especial', alias: 'loja' }),
     )
+
+    sut.insert(entity)
+
+    const content: DashboardContentEntity[] = [
+      new FolderEntity(
+        FolderDataBuilder({
+          name: 'Loja 1 Teste',
+          folderParentId: entity.id,
+          alias: 'L Teste 1',
+        }),
+      ),
+      new FolderEntity(
+        FolderDataBuilder({
+          name: 'Loja 2 Teste',
+          folderParentId: entity.id,
+          alias: 'L Teste 2',
+        }),
+      ),
+      new DashboardItemEntity(
+        DashboardDataBuilder({
+          name: 'Dashboard Teste 1',
+          folderParentId: entity.id,
+          alias: 'Dashboard padrao',
+        }),
+      ),
+      new DashboardItemEntity(
+        DashboardDataBuilder({
+          name: 'Avanço Dashboard Teste 2',
+          folderParentId: entity.id,
+          alias: 'Dashboard padrao',
+        }),
+      ),
+    ]
+
+    content.forEach(cont => {
+      sut.insert(cont)
+    })
   })
 
   it('Should filter by name', async () => {
@@ -66,6 +105,31 @@ describe('FolderInMemoryRepository unit tests', () => {
       'Operações Mistas',
       'Operações Externas',
       'Operações',
+    ])
+  })
+
+  it('Should search by two sort factors', async () => {
+    let filter = new DashboardContentFilter({
+      name: 'Loja Especial',
+    })
+    const entity = (await sut.search(filter))[0]
+
+    filter = new DashboardContentFilter({
+      folderParentId: entity.id,
+    })
+    const sort = new SortParams({ field: 'type' }).addNext(
+      new SortParams({ field: 'name' }),
+    )
+    const foundData = await sut.search(filter, sort)
+
+    console.log(foundData.map(item => item.toJSON()))
+
+    expect(foundData).toBeInstanceOf(Array)
+    expect(foundData.map(item => item.name)).toStrictEqual([
+      'Loja 1 Teste',
+      'Loja 2 Teste',
+      'Avanço Dashboard Teste 2',
+      'Dashboard Teste 1',
     ])
   })
 })

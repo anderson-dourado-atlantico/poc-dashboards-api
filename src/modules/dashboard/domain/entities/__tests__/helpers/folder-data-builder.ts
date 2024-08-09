@@ -1,7 +1,10 @@
 import { faker } from '@faker-js/faker'
 
 import { FolderProps } from '../../folder.entity'
-import { DashboardType } from '../../dashboard-content.entity'
+import {
+  DashboardContentEntity,
+  DashboardType,
+} from '../../dashboard-content.entity'
 
 type Props = {
   folderParentId?: string | null
@@ -10,7 +13,7 @@ type Props = {
   alias?: string
   createdAt?: Date
   updatedAt?: Date
-  content?: FolderProps[]
+  content?: DashboardContentEntity[]
 }
 
 export function FolderDataBuilder(props: Props): FolderProps {
@@ -21,5 +24,6 @@ export function FolderDataBuilder(props: Props): FolderProps {
     alias: props.alias ?? faker.word.sample(5),
     createdAt: props.createdAt ?? new Date(),
     updatedAt: props.updatedAt ?? new Date(),
+    content: props.content ?? null,
   }
 }

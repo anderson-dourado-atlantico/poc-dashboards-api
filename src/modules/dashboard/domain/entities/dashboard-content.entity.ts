@@ -17,6 +17,10 @@ export class DashboardContentEntity extends Entity<DashboardContentProps> {
     public readonly props: DashboardContentProps,
     id?: string,
   ) {
+    props.folderParentId =
+      props.folderParentId && props.folderParentId !== ''
+        ? props.folderParentId
+        : null
     super(props, id)
   }
 

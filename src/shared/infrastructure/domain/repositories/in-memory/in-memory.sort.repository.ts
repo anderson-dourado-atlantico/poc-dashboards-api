@@ -23,26 +23,30 @@ export abstract class InMemorySortRepository<
       return items
     }
 
-    const sortedItems = items.sort((a, b) => {
-      const field_a = this._getField(a, sort.field)
-      const field_b = this._getField(b, sort.field)
-      if (field_a > field_b)
-        return sort.direction === 'asc' ||
-          sort.direction === undefined ||
-          sort.direction === null
-          ? 1
-          : -1
-      if (field_a < field_b)
-        return sort.direction === 'asc' ||
-          sort.direction === undefined ||
-          sort.direction === null
-          ? -1
-          : 1
+    return items.sort((a, b) => this._compareValues(a, b, sort))
+  }
 
-      return 0
-    })
+  private _compareValues(a: E, b: E, sort: SortParams): number {
+    const field_a = this._getField(a, sort.field)
+    const field_b = this._getField(b, sort.field)
+    if (field_a > field_b)
+      return sort.direction === 'asc' ||
+        sort.direction === undefined ||
+        sort.direction === null
+        ? 1
+        : -1
+    if (field_a < field_b)
+      return sort.direction === 'asc' ||
+        sort.direction === undefined ||
+        sort.direction === null
+        ? -1
+        : 1
 
-    return sortedItems
+    if (sort.next && sort.next.field) {
+      return this._compareValues(a, b, sort.next)
+    }
+
+    return 0
   }
 
   private _getField(item: E, pathField: string | string[]): any {

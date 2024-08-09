@@ -10,6 +10,10 @@ import {
   DashboardType,
 } from '../../domain/entities/dashboard-content.entity'
 import { FolderEntity } from '../../domain/entities/folder.entity'
+import {
+  DashboardItemEntity,
+  DashboardItemProps,
+} from '../../domain/entities/dashboard.entity'
 
 function sleep(ms: number): Promise<void> {
   return new Promise(resolve =>
@@ -26,7 +30,7 @@ export class DashboardContentService {
 
   constructor() {}
 
-  async incluirValoresIniciais() {
+  async includeInitialValues() {
     const folderPropsList: DashboardContentProps[] = [
       {
         name: 'Operação',
@@ -59,23 +63,36 @@ export class DashboardContentService {
       new SortParams({ field: 'name', direction: 'asc' }),
     )
 
+    let parentFolderId = dashContent[0].id
     const folderPropsOperacaoList: DashboardContentProps[] = [
       {
         name: 'Operação de Sensores',
         alias: 'Ope Sensores',
-        folderParentId: dashContent[0].id,
+        folderParentId: parentFolderId,
         type: DashboardType.FOLDER,
       },
       {
         name: 'Operação Regular',
         alias: 'Ope Regular',
-        folderParentId: dashContent[0].id,
+        folderParentId: parentFolderId,
         type: DashboardType.FOLDER,
       },
+      {
+        name: 'Operação Loca Web - Teste',
+        alias: 'Teste Loca - W',
+        folderParentId: parentFolderId,
+        type: DashboardType.ITEM,
+        embeddedLink:
+          'https://www.locaweb.com.br/blog/wp-content/uploads/2023/07/dashboard-01.jpg',
+      } as DashboardItemProps,
     ]
 
     folderPropsOperacaoList.forEach(async props => {
-      await this.dashboardRepository.insert(new FolderEntity(props))
+      const content =
+        props['embeddedLink'] !== undefined
+          ? new DashboardItemEntity(props)
+          : new FolderEntity(props)
+      await this.dashboardRepository.insert(content)
       await sleep(1000)
     })
 
@@ -95,12 +112,34 @@ export class DashboardContentService {
     return this.dashboardRepository.search(filter, this.toSort(sort))
   }
 
-  findAll() {
-    return this.dashboardRepository.findAll()
+  async findOne(id: string) {
+    return await this.dashboardRepository.findById(id)
   }
 
-  findOne(id: string) {
-    return this.dashboardRepository.findById(id)
+  async acessarConteudo(id: string): Promise<DashboardContentEntity[]> {
+    const entity = await this.dashboardRepository.findById(id)
+
+    let filter = new DashboardContentFilter({
+      folderParentId: entity.id,
+    })
+    const sort = new SortParams({ field: 'type' }).addNext(
+      new SortParams({ field: 'name' }),
+    )
+
+    return this.dashboardRepository.search(filter, sort)
+  }
+
+  async adicionarDashboardContent(props: DashboardItemProps) {
+    return this.dashboardRepository.insert(new DashboardContentEntity(props))
+  }
+
+  async atualizarDashboardContent(
+    id: string,
+    props: DashboardItemProps,
+  ): Promise<void> {
+    return this.dashboardRepository.update(
+      new DashboardContentEntity(props, id),
+    )
   }
 
   private toSort(sort: SortDto): SortParams {
@@ -114,24 +153,14 @@ export class DashboardContentService {
       sortDtoAtual = sortDtoAtual.next
 
       if (sortDtoAtual && sortDtoAtual.field) {
-        sortParam = sortParam.addNext(
+        sortParam.addNext(
           new SortParams({ field: sort.field, direction: sort.direction }),
         )
+
+        sortParam = sortParam.next
       }
     }
 
     return primeiroSortParam
   }
-
-  // create(createDashboardDto: CreateDashboardDto) {
-  //   return 'This action adds a new dashboard'
-  // }
-
-  // update(id: number, updateDashboardDto: UpdateDashboardDto) {
-  //   return `This action updates a #${id} dashboard`
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} dashboard`
-  //}
 }

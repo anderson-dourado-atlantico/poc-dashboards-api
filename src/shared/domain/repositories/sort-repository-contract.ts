@@ -30,7 +30,7 @@ export class SortParams {
 
   addNext(next: SortParams): SortParams {
     this.next = next
-    return this.next
+    return this
   }
 }
 

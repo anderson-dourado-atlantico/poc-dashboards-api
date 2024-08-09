@@ -5,7 +5,7 @@ import {
 } from './dashboard-content.entity'
 
 export type DashboardItemProps = {
-  embeddedLink: string
+  embeddedLink?: string | null
 } & DashboardContentProps
 
 export class DashboardItemEntity extends DashboardContentEntity {
@@ -15,5 +15,9 @@ export class DashboardItemEntity extends DashboardContentEntity {
   ) {
     super(props, id)
     this.props.type = DashboardType.ITEM
+  }
+
+  get embeddedLink() {
+    return this.props.embeddedLink
   }
 }
